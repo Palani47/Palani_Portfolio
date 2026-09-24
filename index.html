@@ -274,28 +274,36 @@
   .btn.primary { background: var(--java); color: #1a1300; border-color: var(--java); }
   .btn.primary:hover { border-color: var(--text-bright); }
 
-  /* ---------- hero image ---------- */
-.hero-grid {
-  display: grid;
-  grid-template-columns: 1.05fr 0.95fr;
-  gap: 28px;
-  align-items: center;
-}
+/* ---------- hero image (round + close-up) ---------- */
 .hero-art {
-  margin: 0;
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  overflow: hidden;
-  background: var(--bg-raised);
-  box-shadow: var(--shadow);
-  transition: transform 0.2s ease, border-color 0.2s ease;
-}
-.hero-art:hover { transform: translateY(-3px); border-color: var(--java); }
-.hero-art img { display: block; width: 100%; height: auto; }
+  --zoom: 1.8;      /* higher = closer */
+  --focus-x: 30%;   /* moves the zoom point left/right */
+  --focus-y: 0%;    /* moves the zoom point up/down */
 
-@media (max-width: 760px) {
-  .hero-grid { grid-template-columns: 1fr; }
+  margin: 0 auto;
+  width: min(100%, 400px);
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 3px solid var(--java);
+  background: var(--bg-raised);
+  box-shadow: var(--shadow), 0 0 0 8px rgba(248,152,32,0.12);
+  transition: box-shadow 0.25s ease;
 }
+.hero-art:hover {
+  box-shadow: var(--shadow), 0 0 0 12px rgba(248,152,32,0.22);
+}
+.hero-art img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 42% 0%;
+  transform: scale(var(--zoom));
+  transform-origin: var(--focus-x) var(--focus-y);
+  transition: transform 0.4s ease;
+}
+.hero-art:hover img { transform: scale(calc(var(--zoom) + 0.1)); }
 
   /* ---------- section shell ---------- */
   section { position: relative; z-index: 1; padding: 56px 0; border-top: 1px solid var(--line); }
@@ -499,8 +507,8 @@
    <section style="padding-top:0; border-top:none;">
   <div class="wrap">
     <figure class="hero-art">
-      <img src="myImg.png" alt="Palani M workspace illustration" loading="lazy">
-    </figure>
+  <img src="myImg.png" alt="Palani M, software developer, holding a coffee mug and giving a thumbs up" loading="eager">
+</figure>
   </div>
 </section>
 
